@@ -2,8 +2,10 @@ const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 const middlewares = require('./middlewares');
-const router = express.Router();
 const dotenv = require("dotenv");
+const cloudinary = require("cloudinary").v2;
+
+const router = express.Router();
 
 dotenv.config();
 
