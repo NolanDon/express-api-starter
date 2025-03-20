@@ -64,11 +64,3 @@ router.use(middlewares.notFound);
 router.use(middlewares.errorHandler);
 
 module.exports = router;
-
-
-// const port = process.env.PORT || 5000;
-// app.listen(port, () => {
-//   /* eslint-disable no-console */
-//   console.log(`Listening: http://localhost:${port}`);
-//   /* eslint-enable no-console */
-// });
