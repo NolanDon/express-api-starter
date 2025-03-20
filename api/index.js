@@ -1,6 +1,9 @@
 const express = require('express');
 const middlewares = require('./middlewares');
 const router = express.Router();
+const cors = require('cors');
+
+router.use(cors());
 
 router.get('/', (req, res) => {
   res.json({
@@ -11,7 +14,6 @@ router.get('/', (req, res) => {
 router.get('/emojis', (req, res) => {
   res.json(['😀', '😳', '🙄']);
 });
-
 
 router.use(middlewares.notFound);
 router.use(middlewares.errorHandler);
