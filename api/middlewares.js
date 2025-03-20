@@ -1,4 +1,7 @@
 const allowedOrigins = ['https://techden.io'];
+if (process.env.NODE_ENV === 'development') {
+  allowedOrigins.push('http://localhost:5173'); // Allow local frontend
+}
 
 function notFound(req, res, next) {
   res.status(404);
@@ -14,9 +17,7 @@ const refererCheck = (req, res, next) => {
   next();
 };
 
-/* eslint-disable no-unused-vars */
 function errorHandler(err, req, res, next) {
-  /* eslint-enable no-unused-vars */
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   res.status(statusCode);
   res.json({
