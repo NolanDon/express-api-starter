@@ -1,9 +1,18 @@
 const express = require('express');
+const helmet = require('helmet');
+const cors = require('cors');
 const middlewares = require('./middlewares');
 const router = express.Router();
-const cors = require('cors');
 
-router.use(cors());
+// Secure HTTP headers
+router.use(helmet());
+
+// Configure CORS to only allow techden.io
+const corsOptions = {
+  origin: 'https://techden.io',
+  optionsSuccessStatus: 200,
+};
+router.use(cors(corsOptions));
 
 router.get('/', (req, res) => {
   res.json({
