@@ -19,23 +19,29 @@ cloudinary.config({
 // Secure HTTP headers
 router.use(helmet());
 
-// Configure CORS to only allow techden.io
+// ✅ Configure CORS to only allow techden.io (and localhost for dev)
+const allowedOrigins = ['https://techden.io'];
+if (process.env.NODE_ENV === 'development') {
+  allowedOrigins.push('http://localhost:5173'); // Allow local frontend
+}
+
 const corsOptions = {
-  origin: 'https://techden.io',
+  origin: allowedOrigins,
   optionsSuccessStatus: 200,
 };
+
 router.use(cors(corsOptions));
+
+// ✅ Apply originAuth only to API routes (not globally)
+router.use(middlewares.originAuth);
 
 router.get('/', (req, res) => {
   res.json({
-    message: 'API - 👋🌎🌍🌏 nolan',
+    message: 'API - 👋🌎',
   });
 });
 
-router.get('/emojis', (req, res) => {
-  res.json(['😀', '😳', '🙄']);
-});
-
+// ✅ Ensure originAuth is properly applied
 router.get("/sign-upload", (req, res) => {
   try {
     const timestamp = Math.round(new Date().getTime() / 1000);
@@ -60,6 +66,7 @@ router.get("/sign-upload", (req, res) => {
   }
 });
 
+// ✅ Error handling
 router.use(middlewares.notFound);
 router.use(middlewares.errorHandler);
 

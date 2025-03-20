@@ -1,8 +1,11 @@
+const allowedOrigins = ['https://techden.io'];
+
 function notFound(req, res, next) {
   res.status(404);
   const error = new Error(`🔍 - Not Found - ${req.originalUrl}`);
   next(error);
 }
+
 
 /* eslint-disable no-unused-vars */
 function errorHandler(err, req, res, next) {
@@ -15,7 +18,18 @@ function errorHandler(err, req, res, next) {
   });
 }
 
+function originAuth(req, res, next) {
+  const origin = req.headers.origin;
+
+  if (!allowedOrigins.includes(origin)) {
+    return res.status(403).json({ error: "Unauthorized" });
+  }
+  next();
+};
+
 module.exports = {
   notFound,
   errorHandler,
+  // apiKeyAuth,
+  originAuth
 };
