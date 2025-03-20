@@ -4,6 +4,10 @@ const express = require('express');
 
 const router = express.Router();
 
+
+router.use(middlewares.notFound);
+router.use(middlewares.errorHandler);
+
 router.get('/', (req, res) => {
   res.json({
     message: 'API - 👋🌎🌍🌏 nolan',
