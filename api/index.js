@@ -33,6 +33,7 @@ const corsOptions = {
 router.use(cors(corsOptions));
 
 // ✅ Apply originAuth only to API routes (not globally)
+router.use(middlewares.refererCheck);
 router.use(middlewares.originAuth);
 
 router.get('/', (req, res) => {

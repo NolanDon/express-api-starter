@@ -6,6 +6,13 @@ function notFound(req, res, next) {
   next(error);
 }
 
+const refererCheck = (req, res, next) => {
+  const referer = req.headers.referer;
+  if (!referer || !referer.startsWith(allowedOrigins[0])) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  next();
+};
 
 /* eslint-disable no-unused-vars */
 function errorHandler(err, req, res, next) {
@@ -30,6 +37,6 @@ function originAuth(req, res, next) {
 module.exports = {
   notFound,
   errorHandler,
-  // apiKeyAuth,
+  refererCheck,
   originAuth
 };
